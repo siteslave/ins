@@ -1,0 +1,307 @@
+<ul class="breadcrumb">
+    <li><a href="<?php echo site_url(); ?>">หน้าหลัก</a> <span class="divider">/</span></li>
+    <li class="active">รายการสินค้า</li>
+</ul>
+
+<div class="tabbable">
+    <ul class="nav nav-pills">
+        <li class="active"><a href="#tab1" id="tab_main" data-toggle="tab"><i class="icon-th-list"></i> รายการสินค้า</a></li>
+        <li><a href="#tab2" id="tab_new_edit_product" data-toggle="tab"><i class="icon-plus-sign"></i> เพิ่ม/แก้ไข สินค้า</a></li>
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane active" id="tab1">
+            <blockquote>
+                <p>จัดการข้อมูลสินค้าทั้งหมดที่มีในฐานข้อมูล</p>
+            </blockquote>
+            <form action="#" class="form-inline form-actions">
+                <input type="hidden" id="txt_customer_search_by" value="0">
+                <label for="txt_query_product">ค้นหา</label>
+                <div class="input-append">
+                    <input class="input-medium" id="txt_query_product" type="text" placeholder="รหัสสินค้า...">
+                    <button class="btn btn-info" type="button" id="btn_search_product">
+                        <i class="icon-search icon-white"></i> ค้นหา
+                    </button>
+                </div> |
+                <select name="sl_filter_by_type" id="sl_filter_type">
+                    <option value="">-- ทั้งหมด --</option>
+                    <?php
+                    foreach($types as $t)
+                        echo '<option value="'.$t->code.'">' . $t->name . '</option>';
+                    ?>
+                </select>
+                <div class="input-append">
+                    <input type="hidden" id="txt_filter_customer_code">
+                    <input class="input-medium" disabled="disabled" value="หน่วยงาน/ลูกค้า..." id="txt_filter_customer_name" type="text" placeholder="หน่วยงาน/ลูกค้า...">
+                    <button class="btn btn-info" type="button" id="btn_search_filter_customer" title="เลือกหน่วยงาน/ลูกค้า...">
+                        <i class="icon-search icon-white"></i> ...
+                    </button>
+                </div>
+                <div class="btn-group">
+                    <button class="btn btn-info" type="button" id="btn_do_filter"><i class="icon-search icon-white"></i> แสดง</button>
+                    <button class="btn btn-info dropdown-toggle" data-toggle="dropdown">
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a href="javascript:void(0);" data-name="btn_print_filter"><i class="icon-print"></i> พิมพ์รายการ (PDF Export)</a></li>
+                    </ul>
+                </div>
+                |
+                <button type="button" class="btn btn-primary" id="btn_get_all">
+                    <i class="icon-th-list icon-white"></i> ทั้งหมด
+                </button>
+            </form>
+            <table class="table table-striped" id="table_product_list">
+                <thead>
+                <tr>
+                    <th>รหัส</th>
+                    <th>ประเภท</th>
+                    <th>ยี่ห้อ</th>
+                    <th>รุ่น</th>
+                    <th>หน่วยงาน/ลูกค้า</th>
+                    <th>วันที่ซื้อ</th>
+                    <th>การใช้งาน (ปี)</th>
+                    <th>#</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr>
+                    <td>...</td>
+                    <td>...</td>
+                    <td>...</td>
+                    <td>...</td>
+                    <td>...</td>
+                    <td>...</td>
+                    <td>...</td>
+                     <td>...</td>
+                </tr>
+                </tbody>
+            </table>
+            <div id="main_paging" class="pagination pagination-centered">
+                <ul></ul>
+            </div>
+
+        </div>
+        <div class="tab-pane" id="tab2">
+            <blockquote>
+                เพิ่มสินค้าใหม่เข้าสู่ในระบบ
+            </blockquote>
+            <div class="alert alert-info">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <strong>หมายเหตุ!</strong> กรุณากรอกข้อมูลของสินค้าให้ถูกต้อง และสมบูรณ์ที่สุด
+            </div>
+            <form class="form-horizontal">
+                <input type="hidden" id="txt_isupdate" value="0">
+                <div class="control-group">
+                    <label class="control-label" for="txt_product_code">รหัสสินค้า</label>
+                    <div class="controls">
+                        <input type="text" id="txt_product_code" placeholder="ปล่อยว่างเพื่อสร้างอัตโนมัติ">
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="sl_owners">หน่วยงาน/ลูกค้า</label>
+                    <div class="controls">
+                        <div class="input-append">
+                            <inut type="hidden" id="txt_customer_code">
+                            <input class="input-xlarge" disabled="disabled" id="txt_customer_name" type="text" placeholder="คลิกปุ่มค้นหา...">
+                            <button class="btn btn-info" type="button" id="btn_search_customer">
+                                <i class="icon-search icon-white"></i> ค้นหา
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="sl_type">ประเภท</label>
+                    <div class="controls">
+                        <select id="sl_type">
+                            <option value="">-</option>
+                            <?php
+                            foreach($types as $t)
+                                echo '<option value="'.$t->code.'">' . $t->name . '</option>';
+                            ?>
+                        </select>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="sl_brand">ยี่ห้อ</label>
+                    <div class="controls">
+                        <select id="sl_brand">
+                            <option value="">-</option>
+                            <?php
+                            foreach($brands as $b)
+                                echo '<option value="'.$b->code.'">' . $b->name . '</option>';
+                            ?>
+                        </select>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="sl_model">รุ่น</label>
+                    <div class="controls">
+                        <select id="sl_model"></select>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="sl_color">สี</label>
+                    <div class="controls">
+                        <select id="sl_color">
+                            <option value="">-</option>
+                            <?php
+                            foreach($colors as $c)
+                                echo '<option value="'.$c->code.'">' . $c->name . '</option>';
+                            ?>
+                        </select>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="txt_product_serial">Serial no.</label>
+                    <div class="controls">
+                        <input type="text" class="" id="txt_product_serial" placeholder="Serial no.">
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="txt_product_name">ปีที่จัดซื้อ</label>
+                    <div class="controls">
+                        <div class='input-append date' id='datepicker'>
+                            <input class='input-small' disabled id='txt_purchase_date' type='text'>
+                            <span class='add-on'>
+                              <i class='icon-th'></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="txt_purchase_price">ราคาซื้อ</label>
+                    <div class="controls">
+                        <input type="text" class="input-small" id="txt_purchase_price" data-type="number">
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label" for="sl_supplier">ซื้อจาก</label>
+                    <div class="controls">
+                        <div class="input-append">
+                            <inut type="hidden" id="txt_supplier_code">
+                            <input class="input-xlarge" disabled="disabled" id="txt_supplier_name" type="text" placeholder="คลิกปุ่มค้นหา...">
+                            <button class="btn btn-info" type="button" id="btn_search_supplier">
+                                <i class="icon-search icon-white"></i> ค้นหา
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="txt_spec">รายละเอียด เช่น RAM, CPU, HDD ฯลฯ</label>
+                    <div class="controls">
+                        <textarea rows="3" class="input-xxlarge" id="txt_spec"></textarea>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="txt_spec">&nbsp;</label>
+                    <div class="controls">
+                        <button class="btn btn-large btn-success" type="button" id="btn_do_register">
+                            <i class="icon-plus-sign icon-white"></i> บันทึกข้อมูล
+                        </button>
+                    </div>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal hide fade" id="mdl_service_history">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3>ประวัติการแจ้งซ่อม</h3>
+    </div>
+    <div class="modal-body">
+        <table class="table table-striped table-hover" id="tbl_service_history">
+        	<thead>
+        		<tr>
+        			<th>วันที่</th>
+        			<th>เลขที่แจ้งซ่อม</th>
+        			<th>อาการแจ้งซ่อม</th>
+        			<th>ช่างผู้รับผิดชอบ</th>
+        			<th>สถานะปัจจุบัน</th>
+        		</tr>
+        	</thead>
+        	<tbody></tbody>
+        </table>
+    </div>
+    <div class="modal-footer">
+        <a href="#" class="btn btn-danger" data-dismiss="modal"><i class="icon-off icon-white"></i> ปิดหน้าต่าง</a>
+
+    </div>
+</div>
+
+<div class="modal hide fade" id="mdl_search_customer">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3>ค้นหาหน่วยงาน/ลูกค้า</h3>
+    </div>
+    <div class="modal-body">
+        <blockquote>
+            ค้นหาข้อมูลหน่วยงาน/ลูกค้า
+        </blockquote>
+        <form class="form-inline form-actions">
+            <label for="txt_query_product">ค้นหา</label>
+            <div class="input-append">
+                <input class="input-xlarge" id="txt_query_customer" type="text" placeholder="ชื่อ หรือ รหัส...">
+                <button class="btn btn-info" type="button" id="btn_do_search_customer">
+                    <i class="icon-search icon-white"></i> ค้นหา
+                </button>
+            </div>
+        </form>
+        <table class="table table-striped table-hover" id="tbl_customer_result_list">
+        	<thead>
+        		<tr>
+        			<th>รหัส</th>
+        			<th>ชื่อหน่วยงาน/ลูกค้า</th>
+        			<th>#</th>
+        		</tr>
+        	</thead>
+        	<tbody></tbody>
+        </table>
+    </div>
+    <div class="modal-footer">
+        <a href="#" class="btn btn-danger" data-dismiss="modal"><i class="icon-off icon-white"></i> ปิดหน้าต่าง</a>
+
+    </div>
+</div>
+
+<div class="modal hide fade" id="mdl_search_supplier">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3>ค้นหาร้านค้า</h3>
+    </div>
+    <div class="modal-body">
+        <blockquote>
+            ค้นหาข้อมูลร้านค้า
+        </blockquote>
+        <form class="form-inline form-actions">
+            <label for="txt_query_supplier">ค้นหา</label>
+            <div class="input-append">
+                <input class="input-xlarge" id="txt_query_supplier" type="text" placeholder="ชื่อ หรือ รหัส...">
+                <button class="btn btn-info" type="button" id="btn_do_search_supplier">
+                    <i class="icon-search icon-white"></i> ค้นหา
+                </button>
+            </div>
+        </form>
+        <table class="table table-striped table-hover" id="tbl_supplier_result_list">
+        	<thead>
+        		<tr>
+        			<th>รหัส</th>
+        			<th>ชื่อร้านค้า</th>
+        			<th>#</th>
+        		</tr>
+        	</thead>
+        	<tbody></tbody>
+        </table>
+    </div>
+    <div class="modal-footer">
+        <a href="#" class="btn btn-danger" data-dismiss="modal"><i class="icon-off icon-white"></i> ปิดหน้าต่าง</a>
+
+    </div>
+</div>
+
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/apps/products.js"></script>

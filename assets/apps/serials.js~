@@ -1,0 +1,15 @@
+$(function(){
+
+    var serial = {
+        ajax: {
+
+        }
+    };
+
+    $('a[data-name="btn_set_data" ]').click(function(){
+        var id = $(this).attr('data-id'),
+            prefix = $(this).prev().find('input[type="text"]');
+
+            console.log(prefix);
+    });
+});
